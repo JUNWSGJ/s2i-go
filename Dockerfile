@@ -30,6 +30,7 @@ RUN yum install -y centos-release-scl && \
         tar -xz -C /usr/local)
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
+LABEL io.openshift.s2i.scripts-url=image:///usr/local/s2i
 COPY ./s2i/ /usr/local/s2i
 RUN chown -R 1001:1001 /opt/openshift
 ENV TZ=Asia/Shanghai
