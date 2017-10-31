@@ -14,7 +14,6 @@ ENV GO_VERSION=1.${GO_MINOR_VERSION} \
     GOBIN=$HOME/go/bin \
     SOURCE=$HOME/go/src/main \
     PATH=$PATH:$HOME/go/bin:/usr/local/go/bin \
-    STI_SCRIPTS_PATH=
 
 LABEL io.k8s.description="Platform for building and running Go applications" \
       io.k8s.display-name="Go ${GO_VERSION}" \
@@ -32,6 +31,9 @@ RUN yum install -y centos-release-scl && \
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/ /usr/local/s2i
+RUN chown -R 1001:1001 /opt/openshift
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 USER 1001
 
